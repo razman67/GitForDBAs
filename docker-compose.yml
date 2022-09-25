@@ -1,0 +1,17 @@
+version: '3'
+services:
+  flyway:
+    image: flyway/flyway
+    command: -connectRetries=60 migrate
+    volumes:
+      - /Users/ericrasinski/Sites/git/GitForDBAs/flywayconf:/flyway/conf
+      - /Users/ericrasinski/Sites/git/GitForDBAs/migrations:/flyway/sql
+    depends_on:
+      - db
+  db:
+    image: "mcr.microsoft.com/mssql/server:2022-latest"
+    environment:
+        SA_PASSWORD: "SqlServer2022"
+        ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
